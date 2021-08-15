@@ -1,6 +1,6 @@
 # Canonify
 
-<font color="#dd0033">UNDER DEVELOPMENT</font>
+<font color="#dd0033">2021/08 - UNDER DEVELOPMENT</font>
 
 This is a library to retrieve canonical representations of URLs. In the simplest
 case, given a URL, an HTTP request is made to that URL and meta tags are parsed
@@ -25,8 +25,8 @@ and no additional steps are taken.
 Query params present in the original URL but not present in its canonical representation
 are presented back to the caller as exclusions:
 
-|  excluded params |
-|------------------|
+|  Excluded Params |
+| ---------------- |
 | "utm_source"     |
 | "utm_campaign"   |
 
@@ -44,8 +44,8 @@ Result: https://example.com/article.cgi?id=12345
 
 the resulting 'excluded' and 'included' params are as follows:
 
-|  allowed params |  excluded params   |
-|-----------------|--------------------|
+|  Allowed Params |  Excluded Params   |
+| --------------- | ------------------ |
 |     "id"        | "utm_source"       |
 
 From that point on, the following URLs would be transformed without need of
@@ -65,6 +65,9 @@ etc..
 ```
 
 ### URL assumptions
+
+This approach assumes a **high regularlity** to URL naming schemes originating
+from the same domain.
 
 By instantiating a new resolver with a caching store, the resolver will apply
 exclusions found in earlier URLs to URLs from the same domain. For the above
@@ -100,8 +103,8 @@ Input:         https://example.com/article.cgi?id=111
 Result:        https://example.com/article.cgi?id=111               (http lookup)
 ```
 
-|  allowed params |  excluded params   |
-|-----------------|--------------------|
+|  Allowed Params |  Excluded Params   |
+| --------------- | ------------------ |
 |     "id"        |                    |
 
 
@@ -110,15 +113,15 @@ Input:         https://example.com/article.cgi?id=111&new_param=abc
 Result:        https://example.com/article.cgi?id=111               (http lookup)
 ```
 
-|  allowed params |  excluded params   |
-|-----------------|--------------------|
+|  Allowed Params |  Excluded Params   |
+| --------------- | ------------------ |
 |     "id"        |    "new_param"     |
 
 The example above shows that, since `new_param` was not seen before, an HTTP
 request was made. Since `new_param` is not in the second result, it is added as
 an excluded param for future lookups to that domain.
 
-### URL rewrites
+### URL Rewrites
 
 If URL path of the canonical URL does not match the path of the original URL,
 the canonical URL will be returned, but caching rules will not be enabled for
@@ -165,4 +168,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Canonify project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/ivan3bx/canonify/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Canonify project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/ivan3bx/canonify/blob/main/CODE_OF_CONDUCT.md).
