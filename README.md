@@ -2,9 +2,11 @@
 
 <font color="#dd0033">2021/08 - UNDER DEVELOPMENT</font>
 
-This is a library to retrieve canonical representations of URLs. In the simplest
-case, given a URL, an HTTP request is made to that URL and meta tags are parsed
-in order to retrieve the canonical URL in a site's meta tag (e.g..)
+This is a library to retrieve canonical representations of URLs.
+
+In the simplest case, given a URL, an HTTP request is made to that URL
+and meta tags are parsed in order to retrieve the canonical URL in a
+site's meta tag (e.g..)
 
 ```html
 <link rel="canonical" href="https://example.com/article.html">
