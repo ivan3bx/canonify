@@ -13,8 +13,8 @@ in order to retrieve the canonical URL in a site's meta tag (e.g..)
 Using the hypothetical 'link' in a response above:
 
 ```
-Input:  https://example.com/article.html?utm_source=foo&utm_campaign=bar
-Result: https://example.com/article.html
+Input:  https://example.com/article.html?utm_source=a&utm_campaign=b
+Result: https://example.com/article.html                              (http lookup)
 ```
 
 If a canonical link is not found in the document, the original URL is returned un-altered,
@@ -39,7 +39,7 @@ For example, imagine the following scenario:
 
 ```
 Input:  https://example.com/article.cgi?id=12345&utm_source=foo
-Result: https://example.com/article.cgi?id=12345
+Result: https://example.com/article.cgi?id=12345                     (http lookup)
 ```
 
 the resulting 'excluded' and 'included' params are as follows:
@@ -53,13 +53,13 @@ additional HTTP lookups:
 
 ```
 Input:  https://example.com/article.cgi?id=88888
-Result: https://example.com/article.cgi?id=88888
+Result: https://example.com/article.cgi?id=88888                   (http lookup)
 
 Input:  https://example.com/article.cgi?id=99999&utm_source=bar
-Result: https://example.com/article.cgi?id=99999
+Result: https://example.com/article.cgi?id=99999                   (no http lookup)
 
 Input:  https://example.com/article.cgi?utm_source=bar&id=131313
-Result: https://example.com/article.cgi?id=131313
+Result: https://example.com/article.cgi?id=131313                  (no http lookup)
 
 etc..
 ```
@@ -81,20 +81,23 @@ this approach will NOT work for domains has a very irregular URL structure. e.g.
 ```
 # First Request to 'example.com'
 Input:         https://example.com/article.cgi?id=111
-Result:        https://example.com/article.cgi?id=111 (http lookup, path matches)
 Actual Result: https://example.com/article.cgi?id=111
+Result:        https://example.com/article.cgi?id=111 (correct!)
 
-# Future Request to 'example.com'
+# Invalid case!
 Input:         https://example.com/article.cgi?id=222
-Result:        https://example.com/article.cgi?id=111 (no http lookup)
-Actual Result: https://example.com/some_redirected_url_here.html (path does not match!)
+Actual Result: https://example.com/some-redirected-url.html
+Result:        https://example.com/article.cgi?id=111 (NOT correct!)
 ```
 
-In the example above, the second 'result' would be incorrect.
+In the example above, the "example.com" domain has a rewrite rule for the second URL,
+and so the second 'result' would be incorrect.
 
-### Cache invalidation
+### Cache invalidation rules
 
-If a URL is encountered with a param not seen in the inclusion or exclusion list
+#### Parameter differences
+
+If a URL is encountered with a param not seen in the allowed or exclusion list
 for that domain, an HTTP request will always be made, and the same rule will be
 applied to the result:
 
@@ -121,7 +124,7 @@ The example above shows that, since `new_param` was not seen before, an HTTP
 request was made. Since `new_param` is not in the second result, it is added as
 an excluded param for future lookups to that domain.
 
-### URL Rewrites
+#### URL Rewrites
 
 If URL path of the canonical URL does not match the path of the original URL,
 the canonical URL will be returned, but caching rules will not be enabled for
