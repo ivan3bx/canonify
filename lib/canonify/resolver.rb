@@ -37,7 +37,7 @@ module Canonify
 
     def cached_response(uri)
       excluded_params = @cache.read(uri.hostname).fetch(:excluded_params)
-      uri.query_values = uri.query_values.reject { |k, v| excluded_params.include?(k) }
+      uri.query_values = uri.query_values.except(*excluded_params)
       uri.query_values = nil if uri.query_values.empty?
       {url: uri.to_s, excluded_params: excluded_params, included_params: []}
     end

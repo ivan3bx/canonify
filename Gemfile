@@ -7,7 +7,7 @@ group :development, :test do
   gem "rake", "~> 13.0"
   gem "rspec", "~> 3.0"
   gem "simplecov"
-  gem "standardrb", "~> 1.0"
+  gem "standardrb"
 end
 
 group :test do
