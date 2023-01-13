@@ -1,6 +1,10 @@
 # Canonify
 
-<font color="#dd0033">2021/08 - UNDER DEVELOPMENT</font>
+> **Warning**
+>
+> 2023/01 : Archiving this repository.
+>
+> URL resolution was folded into https://everypost.in.
 
 This is a library to retrieve canonical representations of URLs.
 
